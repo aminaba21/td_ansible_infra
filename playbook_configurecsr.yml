@@ -1,33 +1,32 @@
-- name: configuration interfaces
-
+- name: Configuration des interfaces
   hosts: csr1000
-
   gather_facts: false
 
   tasks:
-
-    - name: configgure les interfaces
-
+    - name: Configurer les interfaces
       cisco.ios.ios_l3_interfaces:
-
         config:
-
-        - name: GigabitEthernet2
-
-          ipv4:
-
-          - address: 192.168.2.1/24
-
-        - name: GigabitEthernet3
-
-          ipv4: 
-
-          - address: 192.168.3.1/24
-
-        - name: GigabitEthernet4
-
-          ipv4: 
-
-          - address: 192.168.4.1/24
-
+          - name: GigabitEthernet2
+            ipv4:
+              - address: 192.168.2.1/24
+          - name: GigabitEthernet3
+            ipv4:
+              - address: 192.168.3.1/24
+          - name: GigabitEthernet4
+            ipv4:
+              - address: 192.168.4.1/24
         state: merged
+
+    - name: Activer les interfaces
+      cisco.ios.ios_command:
+        commands:
+          - interface GigabitEthernet2
+          - no shutdown
+          - exit
+          - interface GigabitEthernet3
+          - no shutdown
+          - exit
+          - interface GigabitEthernet4
+          - no shutdown
+          - exit
+
